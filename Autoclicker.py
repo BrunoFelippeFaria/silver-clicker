@@ -1,24 +1,24 @@
-from pyautogui import click
+from pynput.mouse import Controller, Button
 from time import sleep
 
 class AutoClicker:
     def __init__(self):
         #configurações 
-        self.infcliques = False
+        self.limiteCliques = True
         self.ativado = False
         self.delay = 5
-        self.cliques = 15
-    
-    def mostrar_status(self):
-        print("ativado: ", self.ativado)
-        print("cliques: ", self.cliques)
+        self.cliquesTotal = 15
+        self.cliqueAtual = 0
+        self.mouse = Controller()
     
     def clicker(self):
+        self.cliqueAtual = 0
+        sleep(0.5)
         while self.ativado:
-            click()
-            if not self.infcliques:
-                self.cliques -= 1
-                if self.cliques <= 0:
-                    self.ativado = False
-        sleep(self.delay)
+            self.mouse.click(Button.left)
+            self.cliqueAtual += 1
+            if self.limiteCliques and self.cliqueAtual >= self.cliquesTotal:
+                self.ativado = False
+                
+            sleep(self.delay)
 

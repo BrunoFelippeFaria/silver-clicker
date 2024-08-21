@@ -25,14 +25,14 @@
     <widget class="QGroupBox" name="verticalGroupBox">
      <layout class="QVBoxLayout" name="verticalLayout_3">
       <item>
-       <widget class="QRadioButton" name="radioButton_2">
+       <widget class="QRadioButton" name="rbEsquerdo">
         <property name="text">
          <string>bo&amp;tão esquerdo</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QRadioButton" name="radioButton">
+       <widget class="QRadioButton" name="rbDireito">
         <property name="text">
          <string>botão &amp;direito</string>
         </property>
@@ -44,7 +44,7 @@
    <item row="1" column="1" rowspan="10">
     <layout class="QVBoxLayout" name="verticalLayout_2">
      <item>
-      <widget class="QSpinBox" name="spinBox_2"/>
+      <widget class="QDoubleSpinBox" name="dbDelay"/>
      </item>
      <item>
       <widget class="QLabel" name="img">
@@ -80,7 +80,14 @@
       </widget>
      </item>
      <item>
-      <widget class="QTimeEdit" name="timeEdit_2"/>
+      <widget class="QTimeEdit" name="timeEdit_2">
+       <property name="displayFormat">
+        <string>HH:mm:ss</string>
+       </property>
+       <property name="calendarPopup">
+        <bool>false</bool>
+       </property>
+      </widget>
      </item>
      <item>
       <widget class="QLabel" name="label_6">
@@ -90,7 +97,14 @@
       </widget>
      </item>
      <item>
-      <widget class="QTimeEdit" name="timeEdit"/>
+      <widget class="QTimeEdit" name="timeEdit">
+       <property name="displayFormat">
+        <string>HH:mm:ss</string>
+       </property>
+       <property name="calendarPopup">
+        <bool>false</bool>
+       </property>
+      </widget>
      </item>
     </layout>
    </item>
@@ -102,7 +116,7 @@
     </widget>
    </item>
    <item row="7" column="0">
-    <widget class="QPushButton" name="pushButton_2">
+    <widget class="QPushButton" name="btnHotkey">
      <property name="text">
       <string>hotkey</string>
      </property>
@@ -112,35 +126,35 @@
     <widget class="QGroupBox" name="verticalGroupBox">
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>
-       <widget class="QCheckBox" name="checkBox_2">
+       <widget class="QCheckBox" name="cbLimiteCliques">
         <property name="text">
          <string>limite de cliques</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QCheckBox" name="checkBox">
+       <widget class="QCheckBox" name="cbClicarTempo">
         <property name="text">
          <string>clicar por tempo</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QCheckBox" name="checkBox_3">
+       <widget class="QCheckBox" name="cbBloquearMouse">
         <property name="text">
          <string>bloquear mouse</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QCheckBox" name="checkBox_4">
+       <widget class="QCheckBox" name="cbMinimizar">
         <property name="text">
          <string>minimizar ao iniciar</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QCheckBox" name="checkBox_5">
+       <widget class="QCheckBox" name="cbMaximizar">
         <property name="text">
          <string>maximizar ao parar</string>
         </property>
@@ -157,7 +171,14 @@
     </widget>
    </item>
    <item row="3" column="0">
-    <widget class="QSpinBox" name="spinBox"/>
+    <widget class="QSpinBox" name="sbCliques">
+     <property name="suffix">
+      <string/>
+     </property>
+     <property name="maximum">
+      <number>999999999</number>
+     </property>
+    </widget>
    </item>
    <item row="9" column="0">
     <widget class="QPushButton" name="btnStart">
@@ -168,7 +189,7 @@
       </sizepolicy>
      </property>
      <property name="text">
-      <string>Iniciar</string>
+      <string>iniciar</string>
      </property>
     </widget>
    </item>
