@@ -1,5 +1,7 @@
-from PySide6.QtCore import QSize
-from PySide6.QtWidgets import QMainWindow, QPushButton
+from os import walk
+from PySide6.QtCore import QSize, Qt
+from PySide6.QtGui import QPixmap
+from PySide6.QtWidgets import QLabel, QMainWindow, QPushButton
 from PySide6.QtUiTools import QUiLoader 
 
 
@@ -16,9 +18,11 @@ class MainWindow(QMainWindow):
         self.menuBar().addMenu("sobre")
         #widgets
         self.startBtn = self.ui.findChild(QPushButton, "btnStart")
+        self.img = self.ui.findChild(QLabel, "img")
 
         #configs da janela
         self.setCentralWidget(self.ui)
         self.resize(QSize(700,500))
-        self.setWindowTitle("autoclicker")
-
+        self.setWindowTitle("silver clicker")
+        self.setWindowIcon(QPixmap("imagens/icon"))
+        
