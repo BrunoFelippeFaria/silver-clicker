@@ -1,5 +1,4 @@
 import sys
-import threading
 from PySide6.QtCore import Qt
 from PySide6.QtGui import QKeySequence, QShortcut
 from PySide6.QtWidgets import QApplication
@@ -14,12 +13,23 @@ class Main():
         self.autoclicker.main = self
         self.window = MainWindow()
         self.window.show()
-        
+        self.startShortcut = None
+
         #eventos
         self.window.btnStart.clicked.connect(self.startClicker)
+        self.window.hotkeyWindow.btnOk.clicked.connect(self.atualizarAtalho)
         self.autoclicker.finished.connect(self.atualizarWindow)
-
+        self.atualizarAtalho() 
         app.exec()
+
+    def atualizarAtalho(self):
+        if self.startShortcut:
+            self.startShortcut.setEnabled(False)
+            self.startShortcut.deleteLater()
+        with open("atalho", "r") as atalho:
+            self.startShortcut = QShortcut(QKeySequence(atalho.read().strip()), self.window)
+        self.startShortcut.activated.connect(self.startClicker) 
+        
 
     def atualizar(self):
        self.autoclicker.botaoEsquerdo = self.window.rbEsquerdo.isChecked()
