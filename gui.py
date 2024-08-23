@@ -1,6 +1,6 @@
 from PySide6.QtCore import QSize
 from PySide6.QtGui import QKeySequence, QPixmap, QShortcut
-from PySide6.QtWidgets import QCheckBox, QDoubleSpinBox, QLabel, QLineEdit, QMainWindow, QPushButton, QRadioButton, QSpinBox, QWidget
+from PySide6.QtWidgets import QCheckBox, QDoubleSpinBox, QLabel, QLineEdit, QMainWindow, QMessageBox, QPushButton, QRadioButton, QSpinBox, QWidget
 from PySide6.QtUiTools import QUiLoader
 
 _loader = QUiLoader()
@@ -53,6 +53,13 @@ class MainWindow(QMainWindow):
     def mostrarHotkeyWindow(self):
         self.hotkeyWindow.show()
     
+    def mostrarErro(self, txt, infoTxt, titulo):
+        MessageBox = QMessageBox()
+        MessageBox.setIcon(QMessageBox.Critical)
+        MessageBox.setText(txt)
+        MessageBox.setInformativeText(infoTxt)
+        MessageBox.setWindowTitle(titulo)
+        return MessageBox
 
         
 
@@ -74,7 +81,6 @@ class hotkeyWindow(QWidget):
         arquivo = open("atalho","w+")
         arquivo.write(self.lineEdit.text())
         arquivo.close()
-        self.close()
         
     
     

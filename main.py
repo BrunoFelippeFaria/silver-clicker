@@ -1,35 +1,67 @@
 import sys
-from PySide6.QtCore import Qt
+from time import sleep
+from PySide6.QtCore import QSize, Qt
 from PySide6.QtGui import QKeySequence, QShortcut
 from PySide6.QtWidgets import QApplication
-from Autoclicker import AutoClicker
+from autoclicker import AutoClicker
+from pynput import keyboard
 from gui import MainWindow
 
 
 class Main():
     def __init__(self):
-        app = QApplication(sys.argv)
+        self.app = QApplication(sys.argv)
         self.autoclicker = AutoClicker()
         self.autoclicker.main = self
         self.window = MainWindow()
         self.window.show()
         self.startShortcut = None
+        self.listerner = None
 
         #eventos
         self.window.btnStart.clicked.connect(self.startClicker)
         self.window.hotkeyWindow.btnOk.clicked.connect(self.atualizarAtalho)
         self.autoclicker.finished.connect(self.atualizarWindow)
         self.atualizarAtalho() 
-        app.exec()
+        
+        self.app.exec()
 
     def atualizarAtalho(self):
-        if self.startShortcut:
-            self.startShortcut.setEnabled(False)
-            self.startShortcut.deleteLater()
+        if self.listerner:
+            self.listerner.stop()
         with open("atalho", "r") as atalho:
-            self.startShortcut = QShortcut(QKeySequence(atalho.read().strip()), self.window)
-        self.startShortcut.activated.connect(self.startClicker) 
+            atalhoStr = atalho.read().strip()
+            
+            keys = atalhoStr.split("+")
+            formated_keys = []
+
+            for key in keys:
+                if key in {"shift", "ctrl", "alt"}:
+                    formated_keys.append(f"<{key}>")
+                else:
+                    formated_keys.append(key)
+                self.startShortcut = "+".join(formated_keys)
         
+            try:
+                self.listerner = keyboard.GlobalHotKeys({
+                    self.startShortcut: self.startClicker
+                })
+                self.listerner.start()
+            except:
+                erro = "atalho invalido"
+                infotxt = "o texto inserido não pode ser usado como atalho"
+                MessageBox = self.window.mostrarErro(erro, infotxt, erro)
+                MessageBox.exec()
+            else:
+                if self.window.hotkeyWindow.isVisible():
+                    self.window.hotkeyWindow.close()
+    
+    def on_press(self, key):
+        if hasattr(key, "char") and key.char:
+            char = key.char
+            if char in self.startShortcut:
+                self.startShortcut[char]()
+
 
     def atualizar(self):
        self.autoclicker.botaoEsquerdo = self.window.rbEsquerdo.isChecked()
@@ -43,7 +75,7 @@ class Main():
         self.autoclicker.ativado = not self.autoclicker.ativado
     
         self.atualizarWindow()
-        
+
         if self.autoclicker.ativado: 
             self.autoclicker.start()
 
@@ -58,6 +90,10 @@ class Main():
                 self.window.showMinimized()
             self.window.btnStart.setText("parar")
             
+    def closeEvent(self, event):
+        if self.listerner:
+            self.listerner.stop()
+        event.accept()
     
     def debug(self):
         print("cliques: ", self.autoclicker.cliquesTotal)
