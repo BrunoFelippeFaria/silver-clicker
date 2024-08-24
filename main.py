@@ -82,7 +82,7 @@ class Main():
     def atualizarWindow(self):
         if not self.autoclicker.ativado:
             if self.window.cbMaximizar.isChecked():
-                self.window.setWindowState(Qt.WindowNoState)
+                self.window.showNormal()
                 self.window.activateWindow()
             self.window.btnStart.setText("iniciar")
         else:
