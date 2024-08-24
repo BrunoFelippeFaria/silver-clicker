@@ -144,9 +144,9 @@
        </widget>
       </item>
       <item>
-       <widget class="QCheckBox" name="cbBloquearMouse">
+       <widget class="QCheckBox" name="cbTravarMouse">
         <property name="text">
-         <string>bloquear mouse</string>
+         <string>travar mouse</string>
         </property>
        </widget>
       </item>

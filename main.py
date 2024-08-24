@@ -68,10 +68,10 @@ class Main():
        self.autoclicker.cliquesTotal = self.window.sbCliques.value() 
        self.autoclicker.delay = self.window.dbDelay.value()
        self.autoclicker.limiteCliques = self.window.cbLimiteCliques.isChecked()
+       self.autoclicker.travarMouse = self.window.cbTravarMouse.isChecked()
 
     def startClicker(self):
         self.atualizar()
-        self.debug()
         self.autoclicker.ativado = not self.autoclicker.ativado
     
         self.atualizarWindow()

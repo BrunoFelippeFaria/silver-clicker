@@ -1,5 +1,5 @@
 from PySide6.QtCore import QSize
-from PySide6.QtGui import QKeySequence, QPixmap, QShortcut
+from PySide6.QtGui import QPixmap
 from PySide6.QtWidgets import QCheckBox, QDoubleSpinBox, QLabel, QLineEdit, QMainWindow, QMessageBox, QPushButton, QRadioButton, QSpinBox, QWidget
 from PySide6.QtUiTools import QUiLoader
 
@@ -22,7 +22,7 @@ class MainWindow(QMainWindow):
         
         self.cbLimiteCliques = self.ui.findChild(QCheckBox, "cbLimiteCliques")
         self.cbClicarTempo = self.ui.findChild(QCheckBox, "cbClicarTempo")
-        self.cbBloquearMouse = self.ui.findChild(QCheckBox, "cbBloquearMouse")
+        self.cbTravarMouse = self.ui.findChild(QCheckBox, "cbTravarMouse")
         self.cbMinimizar = self.ui.findChild(QCheckBox, "cbMinimizar")
         self.cbMaximizar = self.ui.findChild(QCheckBox, "cbMaximizar")
 
