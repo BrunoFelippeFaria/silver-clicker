@@ -1,6 +1,7 @@
 import sys
-from time import sleep
-from PySide6.QtCore import QSize, Qt
+from time import sleep, time
+from threading import Thread
+from PySide6.QtCore import QSize, Qt, QTime
 from PySide6.QtGui import QKeySequence, QShortcut
 from PySide6.QtWidgets import QApplication
 from autoclicker import AutoClicker
@@ -61,8 +62,7 @@ class Main():
             char = key.char
             if char in self.startShortcut:
                 self.startShortcut[char]()
-
-
+        
     def atualizar(self):
        self.autoclicker.botaoEsquerdo = self.window.rbEsquerdo.isChecked()
        self.autoclicker.cliquesTotal = self.window.sbCliques.value() 
@@ -70,13 +70,32 @@ class Main():
        self.autoclicker.limiteCliques = self.window.cbLimiteCliques.isChecked()
        self.autoclicker.travarMouse = self.window.cbTravarMouse.isChecked()
 
+    def timer(self):
+        inicio = time()
+        while self.autoclicker.ativado:
+            tempoExecucao = time() - inicio
+            #converte o tempo para horas, minutos e segundos
+            horas = int(tempoExecucao // 3600)
+            minutos = int((tempoExecucao % 3600) // 60)
+            segundos = int(tempoExecucao % 60)
+
+            self.window.teAtivo.setTime(QTime(horas, minutos, segundos))
+
+            tempoClicar = self.window.teClicar.time()
+            tempoAtivo = self.window.teAtivo.time()
+
+            if self.window.cbClicarTempo.isChecked() and tempoClicar == tempoAtivo:
+                self.startClicker()
+
+            sleep(0.1)
+
     def startClicker(self):
         self.atualizar()
         self.autoclicker.ativado = not self.autoclicker.ativado
-    
         self.atualizarWindow()
-
-        if self.autoclicker.ativado: 
+        if self.autoclicker.ativado:
+            thread = Thread(target=self.timer)
+            thread.start()
             self.autoclicker.start()
 
     def atualizarWindow(self):

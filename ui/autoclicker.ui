@@ -84,7 +84,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QTimeEdit" name="timeEdit_2">
+      <widget class="QTimeEdit" name="teClicar">
        <property name="displayFormat">
         <string>HH:mm:ss</string>
        </property>
@@ -101,7 +101,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QTimeEdit" name="timeEdit">
+      <widget class="QTimeEdit" name="teAtivo">
        <property name="displayFormat">
         <string>HH:mm:ss</string>
        </property>
