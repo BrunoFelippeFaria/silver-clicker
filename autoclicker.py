@@ -1,5 +1,4 @@
 from PySide6.QtCore import QThread, Signal
-from pynput import mouse
 from pynput.mouse import Controller, Button
 from time import sleep
 

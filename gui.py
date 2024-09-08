@@ -1,6 +1,6 @@
-from PySide6.QtCore import QSize, Qt
+from PySide6.QtCore import QSize
 from PySide6.QtGui import QPixmap
-from PySide6.QtWidgets import QCheckBox, QTimeEdit, QDoubleSpinBox, QLabel, QLineEdit, QMainWindow, QMessageBox, QPushButton, QRadioButton, QSpinBox, QWidget, QDockWidget
+from PySide6.QtWidgets import QCheckBox, QTimeEdit, QDoubleSpinBox, QLabel, QLineEdit, QMainWindow, QMessageBox, QPushButton, QRadioButton, QSpinBox, QWidget
 from PySide6.QtUiTools import QUiLoader
 
 _loader = QUiLoader()
@@ -11,7 +11,7 @@ class MainWindow(QMainWindow):
         #carrega a interface
         self.ui = _loader.load("ui/autoclicker.ui")
         #outras janelas
-        self.hotkeyWindow = hotkeyWindow(self)
+        self.hotkeyWindow = AtalhoWindow(self)
         #widgets
         self.btnStart = self.ui.findChild(QPushButton, "btnStart")
         self.btnHotkey = self.ui.findChild(QPushButton, "btnHotkey")
@@ -59,14 +59,15 @@ class MainWindow(QMainWindow):
         MessageBox.setText(txt)
         MessageBox.setInformativeText(infoTxt)
         MessageBox.setWindowTitle(titulo)
+        MessageBox.setWindowIcon(QPixmap("imagens/mouseIcon.png"))
         return MessageBox
 
         
 
-class hotkeyWindow(QWidget):
+class AtalhoWindow(QWidget):
     def __init__(self, mainWindow):
         super().__init__()
-        self.ui = _loader.load("ui/hotkey.ui", self)
+        self.ui = _loader.load("ui/atalho.ui", self)
         self.mainWindow = mainWindow
         #widgets
         self.btnOk = self.findChild(QPushButton,"btnOk")
@@ -76,7 +77,8 @@ class hotkeyWindow(QWidget):
         self.btnOk.clicked.connect(self.btnOkPress)
 
         #configs da janela
-        self.setWindowTitle("hotkey")
+        self.setWindowTitle("atalho")
+        self.setWindowIcon(QPixmap("imagens/mouseIcon.png"))
     def btnOkPress(self):
         arquivo = open("atalho","w+")
         arquivo.write(self.lineEdit.text())

@@ -27,14 +27,14 @@
       <item>
        <widget class="QRadioButton" name="rbEsquerdo">
         <property name="text">
-         <string>bo&amp;tão esquerdo</string>
+         <string>Bo&amp;tão esquerdo</string>
         </property>
        </widget>
       </item>
       <item>
        <widget class="QRadioButton" name="rbDireito">
         <property name="text">
-         <string>botão &amp;direito</string>
+         <string>Botão &amp;direito</string>
         </property>
        </widget>
       </item>
@@ -47,6 +47,9 @@
       <widget class="QDoubleSpinBox" name="dbDelay">
        <property name="minimum">
         <double>0.010000000000000</double>
+       </property>
+       <property name="maximum">
+        <double>99999.990000000005239</double>
        </property>
       </widget>
      </item>
@@ -79,7 +82,7 @@
      <item>
       <widget class="QLabel" name="label_5">
        <property name="text">
-        <string>clicar por</string>
+        <string>Clicar por</string>
        </property>
       </widget>
      </item>
@@ -96,12 +99,18 @@
      <item>
       <widget class="QLabel" name="label_6">
        <property name="text">
-        <string>ativo a</string>
+        <string>Tempo de execução</string>
        </property>
       </widget>
      </item>
      <item>
       <widget class="QTimeEdit" name="teAtivo">
+       <property name="readOnly">
+        <bool>true</bool>
+       </property>
+       <property name="buttonSymbols">
+        <enum>QAbstractSpinBox::NoButtons</enum>
+       </property>
        <property name="displayFormat">
         <string>HH:mm:ss</string>
        </property>
@@ -122,7 +131,7 @@
    <item row="7" column="0">
     <widget class="QPushButton" name="btnHotkey">
      <property name="text">
-      <string>hotkey</string>
+      <string>Atalho</string>
      </property>
     </widget>
    </item>
@@ -132,35 +141,35 @@
       <item>
        <widget class="QCheckBox" name="cbLimiteCliques">
         <property name="text">
-         <string>limite de cliques</string>
+         <string>Limite de cliques</string>
         </property>
        </widget>
       </item>
       <item>
        <widget class="QCheckBox" name="cbClicarTempo">
         <property name="text">
-         <string>clicar por tempo</string>
+         <string>Clicar por tempo</string>
         </property>
        </widget>
       </item>
       <item>
        <widget class="QCheckBox" name="cbTravarMouse">
         <property name="text">
-         <string>travar mouse</string>
+         <string>Travar mouse</string>
         </property>
        </widget>
       </item>
       <item>
        <widget class="QCheckBox" name="cbMinimizar">
         <property name="text">
-         <string>minimizar ao iniciar</string>
+         <string>Minimizar ao iniciar</string>
         </property>
        </widget>
       </item>
       <item>
        <widget class="QCheckBox" name="cbMaximizar">
         <property name="text">
-         <string>maximizar ao parar</string>
+         <string>Maximizar ao parar</string>
         </property>
        </widget>
       </item>
@@ -193,7 +202,7 @@
       </sizepolicy>
      </property>
      <property name="text">
-      <string>iniciar</string>
+      <string>Iniciar</string>
      </property>
     </widget>
    </item>

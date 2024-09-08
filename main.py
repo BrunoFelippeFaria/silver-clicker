@@ -1,8 +1,7 @@
 import sys
 from time import sleep, time
 from threading import Thread
-from PySide6.QtCore import QSize, Qt, QTime
-from PySide6.QtGui import QKeySequence, QShortcut
+from PySide6.QtCore import QTime
 from PySide6.QtWidgets import QApplication
 from autoclicker import AutoClicker
 from pynput import keyboard
@@ -31,13 +30,14 @@ class Main():
         if self.listerner:
             self.listerner.stop()
         with open("atalho", "r") as atalho:
-            atalhoStr = atalho.read().strip()
+            atalhoStr = atalho.read().strip().lower()
             
             keys = atalhoStr.split("+")
             formated_keys = []
+            specialKeys = {"shift", "ctrl", "alt", "f1", "f2", "f3", "f4", "f5", "f6", "f7", "f8", "f9", "f10", "f11", "f12", "tab"}
 
             for key in keys:
-                if key in {"shift", "ctrl", "alt"}:
+                if key in specialKeys:
                     formated_keys.append(f"<{key}>")
                 else:
                     formated_keys.append(key)
@@ -53,6 +53,9 @@ class Main():
                 infotxt = "o texto inserido não pode ser usado como atalho"
                 MessageBox = self.window.mostrarErro(erro, infotxt, erro)
                 MessageBox.exec()
+                with open("atalho", "w") as atalho:
+                    atalho.write("ctrl+shift+p")
+                    
             else:
                 if self.window.hotkeyWindow.isVisible():
                     self.window.hotkeyWindow.close()
@@ -103,11 +106,11 @@ class Main():
             if self.window.cbMaximizar.isChecked():
                 self.window.showNormal()
                 self.window.activateWindow()
-            self.window.btnStart.setText("iniciar")
+            self.window.btnStart.setText("Iniciar")
         else:
             if self.window.cbMinimizar.isChecked():
                 self.window.showMinimized()
-            self.window.btnStart.setText("parar")
+            self.window.btnStart.setText("Parar")
             
     def closeEvent(self, event):
         if self.listerner:
