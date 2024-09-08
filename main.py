@@ -15,10 +15,10 @@ class Main():
         #arquivo de configuração
         self.configFile = "config.json"
         self.config = None
-
+        #gui e autoclicker
         self.autoclicker = AutoClicker()
         self.window = MainWindow()
-        self.window.show()
+        #atalho
         self.atalhoIniciar = None
         self.listerner = None
 
@@ -36,8 +36,10 @@ class Main():
         self.autoclicker.finished.connect(self.atualizarWindow)
         self.atualizarAtalho() 
 
+        self.window.show()
         self.app.exec()
 
+    #funções de configuração
     def salvarConfig(self, config):
         with open(self.configFile, "w+") as file:
             json.dump(config, file, indent=4)
@@ -46,7 +48,7 @@ class Main():
         with open(self.configFile, "r") as file:
             config = json.load(file)
             return config
-
+    
     def carregarConfig(self):
         config = self.getConfig()
         self.window.dbDelay.setValue(config["delay"])
@@ -84,6 +86,7 @@ class Main():
         self.salvarConfig(config)
         self.carregarConfig()
 
+    #adiciona/modifica o atalho que inicia o autoclicker
     def atualizarAtalho(self):        
         self.config = self.getConfig()
         if self.listerner:
@@ -123,7 +126,8 @@ class Main():
             char = key.char
             if char in self.startShortcut:
                 self.startShortcut[char]()
-        
+
+    #atualiza as opções antes de iniciar o autoclicker
     def atualizar(self):
        self.autoclicker.botaoEsquerdo = self.window.rbEsquerdo.isChecked()
        self.autoclicker.cliquesTotal = self.window.sbCliques.value() 
@@ -131,6 +135,7 @@ class Main():
        self.autoclicker.limiteCliques = self.window.cbLimiteCliques.isChecked()
        self.autoclicker.travarMouse = self.window.cbTravarMouse.isChecked()
 
+    #timer que mostra o tempo de execução
     def timer(self):
         inicio = time()
         while self.autoclicker.ativado:
@@ -149,7 +154,8 @@ class Main():
                 self.startClicker()
 
             sleep(0.1)
-
+    
+    #inicia/para o autoclicker
     def startClicker(self):
         self.atualizar()
         self.autoclicker.ativado = not self.autoclicker.ativado
@@ -158,7 +164,8 @@ class Main():
             thread = Thread(target=self.timer)
             thread.start()
             self.autoclicker.start()
-
+    
+    #atualiza o texto na janela
     def atualizarWindow(self):
         if not self.autoclicker.ativado:
             if self.window.cbMaximizar.isChecked():
@@ -169,7 +176,8 @@ class Main():
             if self.window.cbMinimizar.isChecked():
                 self.window.showMinimized()
             self.window.btnStart.setText("Parar")
-            
+    
+    #destroi os atalhos quando o programa for fechado
     def closeEvent(self, event):
         if self.listerner:
             self.listerner.stop()
@@ -178,4 +186,3 @@ class Main():
 if __name__ == "__main__":
     main = Main()
     main.atualizarConfig(main.config)
-

@@ -15,13 +15,14 @@ class AutoClicker(QThread):
         self.mouse = Controller()
         self.botaoEsquerdo = True
         self.travarMouse = False
-        
+    
     def click(self):
         if self.botaoEsquerdo:
             self.mouse.click(Button.left)
         else:
             self.mouse.click(Button.right)
 
+    #inicia o autoclicker
     def run(self):
         self.cliqueAtual = 0
         sleep(0.5)
@@ -37,4 +38,3 @@ class AutoClicker(QThread):
             
             sleep(self.delay)
         self.finished.emit()
-
