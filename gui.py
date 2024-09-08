@@ -43,7 +43,7 @@ class MainWindow(QMainWindow):
         self.setCentralWidget(self.ui)
         self.resize(QSize(700,500))
         self.setWindowTitle("Silver Clicker")
-        self.setWindowIcon(QPixmap("imagens/mouseIcon.png"))
+        self.setWindowIcon(QPixmap("imagens/mouseIcon.ico"))
         
         #eventos
         self.btnAtalho.clicked.connect(self.mostrarAtalhoWindow)
@@ -58,7 +58,7 @@ class MainWindow(QMainWindow):
         MessageBox.setText(txt)
         MessageBox.setInformativeText(infoTxt)
         MessageBox.setWindowTitle(titulo)
-        MessageBox.setWindowIcon(QPixmap("imagens/mouseIcon.png"))
+        MessageBox.setWindowIcon(QPixmap("imagens/mouseIcon.ico"))
         return MessageBox
     
     # ativa/desativo o QTimeEdit clicar
@@ -90,7 +90,7 @@ class AtalhoWindow(QWidget):
 
         #configs da janela
         self.setWindowTitle("atalho")
-        self.setWindowIcon(QPixmap("imagens/mouseIcon.png"))
+        self.setWindowIcon(QPixmap("imagens/mouseIcon.ico"))
         self.setFixedSize(QSize(500,100))
 
     def btnOkPress(self):
