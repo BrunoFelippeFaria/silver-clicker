@@ -1,0 +1,11 @@
+{
+    "delay": 0.01,
+    "cliques": 15,
+    "limiteCliques": true,
+    "clicarTempo": true,
+    "travarMouse": false,
+    "minimizar": false,
+    "maximizar": false,
+    "btnEsquerdo": true,
+    "atalho": "a"
+}

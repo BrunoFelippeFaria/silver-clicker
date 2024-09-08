@@ -1,3 +1,4 @@
+import json
 from PySide6.QtCore import QSize
 from PySide6.QtGui import QPixmap
 from PySide6.QtWidgets import QCheckBox, QTimeEdit, QDoubleSpinBox, QLabel, QLineEdit, QMainWindow, QMessageBox, QPushButton, QRadioButton, QSpinBox, QWidget
@@ -11,10 +12,10 @@ class MainWindow(QMainWindow):
         #carrega a interface
         self.ui = _loader.load("ui/autoclicker.ui")
         #outras janelas
-        self.hotkeyWindow = AtalhoWindow(self)
+        self.atalhoWindow = AtalhoWindow(self)
         #widgets
         self.btnStart = self.ui.findChild(QPushButton, "btnStart")
-        self.btnHotkey = self.ui.findChild(QPushButton, "btnHotkey")
+        self.btnAtalho = self.ui.findChild(QPushButton, "btnHotkey")
 
         self.cbLimiteCliques = self.ui.findChild(QCheckBox, "cbLimiteCliques")
         self.cbClicarTempo = self.ui.findChild(QCheckBox, "cbClicarTempo")
@@ -36,10 +37,7 @@ class MainWindow(QMainWindow):
         self.img.setPixmap(QPixmap("imagens/mouse.png"))
 
         #configs padrão dos widgets 
-        self.dbDelay.setValue(1.0)
-        self.sbCliques.setValue(15)
-        self.cbLimiteCliques.setChecked(True)
-        self.rbEsquerdo.setChecked(True)
+        self.ativarTeClicar()
 
         #configs da janela
         self.setCentralWidget(self.ui)
@@ -47,11 +45,11 @@ class MainWindow(QMainWindow):
         self.setWindowTitle("Silver Clicker")
         self.setWindowIcon(QPixmap("imagens/mouseIcon.png"))
         #eventos
-        self.btnHotkey.clicked.connect(self.mostrarHotkeyWindow)
+        self.btnAtalho.clicked.connect(self.mostrarAtalhoWindow)
+        self.cbClicarTempo.stateChanged.connect(self.ativarTeClicar)
 
-
-    def mostrarHotkeyWindow(self):
-        self.hotkeyWindow.show()
+    def mostrarAtalhoWindow(self):
+        self.atalhoWindow.show()
     
     def mostrarErro(self, txt, infoTxt, titulo):
         MessageBox = QMessageBox()
@@ -61,9 +59,13 @@ class MainWindow(QMainWindow):
         MessageBox.setWindowTitle(titulo)
         MessageBox.setWindowIcon(QPixmap("imagens/mouseIcon.png"))
         return MessageBox
-
-        
-
+    
+    def ativarTeClicar(self):
+        if self.cbClicarTempo.isChecked():
+           self.teClicar.setEnabled(True)
+        else:
+            self.teClicar.setEnabled(False) 
+ 
 class AtalhoWindow(QWidget):
     def __init__(self, mainWindow):
         super().__init__()
@@ -80,9 +82,8 @@ class AtalhoWindow(QWidget):
         self.setWindowTitle("atalho")
         self.setWindowIcon(QPixmap("imagens/mouseIcon.png"))
     def btnOkPress(self):
-        arquivo = open("atalho","w+")
-        arquivo.write(self.lineEdit.text())
-        arquivo.close()
-        
-    
-    
+        with open("config.json", "r") as file:
+            config = json.load(file)
+            config["atalho"] = self.lineEdit.text()
+        with open("config.json", "w") as file:
+            json.dump(config, file, indent=4)
